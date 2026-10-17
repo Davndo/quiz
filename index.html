@@ -70,6 +70,31 @@ p{margin:0 0 12px;}
 .dl-btn .sub{color:var(--ink-soft);font-size:0.78rem;margin-top:2px;}
 @media(max-width:560px){.dl-menu{grid-template-columns:1fr;}}
 
+.dl-btn-split{padding:0;align-items:stretch;}
+.dl-btn-main{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  flex:1;
+  padding:16px 18px;
+  text-decoration:none;
+  color:var(--ink);
+  min-width:0;
+}
+.dl-btn-icon{
+  flex:none;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:44px;
+  border-left:1px solid var(--line);
+  color:var(--ink-soft);
+  text-decoration:none;
+  transition:background .15s ease,color .15s ease;
+}
+.dl-btn-icon:hover{background:#e4e4e4;color:var(--accent-dark);}
+.dl-btn-icon svg{width:17px;height:17px;}
+
 /* ---- Figures ---- */
 figure{margin:18px 0;}
 figure img{
@@ -157,13 +182,18 @@ th{color:var(--ink-soft);font-weight:700;font-size:0.78rem;text-transform:upperc
         <span class="sub">Latihan Soal Quiz DL 1.docx</span>
       </span>
     </a>
-    <a class="dl-btn" href="#notebook">
-      <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12"/><path d="m8 11 4 4 4-4"/><path d="M4 21h16"/></svg></span>
-      <span>
-        <span class="label">Lihat Notebook Jawaban</span>
-        <span class="sub">Review_Quiz_DL.ipynb — scroll ke bawah</span>
-      </span>
-    </a>
+    <div class="dl-btn dl-btn-split">
+      <a class="dl-btn-main" href="#notebook">
+        <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12"/><path d="m8 11 4 4 4-4"/><path d="M4 21h16"/></svg></span>
+        <span>
+          <span class="label">Lihat Notebook Jawaban</span>
+          <span class="sub">Review_Quiz_DL.ipynb — scroll ke bawah</span>
+        </span>
+      </a>
+      <a class="dl-btn-icon" href="Review_Quiz_DL.ipynb" download title="Download Review_Quiz_DL.ipynb">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      </a>
+    </div>
   </div>
 
   <h2>Halaman Soal</h2>
