@@ -1,4 +1,4 @@
-const CACHE_NAME = "dl-review-quiz-v1";
+const CACHE_NAME = "dl-review-quiz-v2";
 const CORE_ASSETS = [
   "./",
   "./index.html",
@@ -6,7 +6,9 @@ const CORE_ASSETS = [
   "./fig1-model-visualization.png",
   "./fig2-model-training.png",
   "./fig3-model-prediction.png",
-  "./fig4-model-evaluation.png"
+  "./fig4-model-evaluation.png",
+  "./Latihan%20Soal%20Quiz%20DL%201.docx",
+  "./Review_Quiz_DL.ipynb"
 ];
 
 self.addEventListener("install", function (event) {
