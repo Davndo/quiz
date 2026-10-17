@@ -1,0 +1,397 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Deep Learning — Review Quiz</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#5b9dff">
+<style>
+:root{
+  --bg:#0f1115;
+  --surface:#171a21;
+  --panel:#1b1f27;
+  --ink:#e8eaf0;
+  --ink-soft:#9aa1b1;
+  --line:#2a2f3a;
+  --accent:#5b9dff;
+  --accent-soft:#1c2a42;
+  --code-bg:#11141a;
+  --ok:#4caf7d;
+  --bad:#e06464;
+}
+*{box-sizing:border-box;}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--ink);
+  font-family:-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  line-height:1.6;
+}
+.wrap{max-width:900px;margin:0 auto;padding:40px 20px 80px;}
+h1,h2,h3{font-weight:700;letter-spacing:-0.01em;}
+h1{font-size:2rem;margin:0 0 6px;}
+h2{font-size:1.3rem;margin:36px 0 14px;padding-top:18px;border-top:1px solid var(--line);}
+h3{font-size:1.05rem;margin:22px 0 8px;color:var(--accent);}
+p{color:var(--ink);margin:0 0 12px;}
+.subtitle{color:var(--ink-soft);margin-bottom:28px;font-size:0.95rem;}
+.badge{
+  display:inline-block;
+  background:var(--accent-soft);
+  color:var(--accent);
+  font-size:0.72rem;
+  font-weight:700;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  padding:4px 10px;
+  border-radius:100px;
+  margin-bottom:14px;
+}
+.card{
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-radius:12px;
+  padding:20px 22px;
+  margin-bottom:16px;
+}
+.steps{counter-reset:step;padding:0;list-style:none;margin:0;}
+.steps li{
+  counter-increment:step;
+  position:relative;
+  padding:14px 0 14px 34px;
+  border-bottom:1px solid var(--line);
+}
+.steps li:last-child{border-bottom:none;}
+.steps li::before{
+  content:counter(step);
+  position:absolute;
+  left:0;
+  top:14px;
+  width:22px;
+  height:22px;
+  border-radius:50%;
+  background:var(--accent-soft);
+  color:var(--accent);
+  font-size:0.78rem;
+  font-weight:700;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.steps b{display:block;margin-bottom:3px;}
+.steps span{color:var(--ink-soft);font-size:0.92rem;}
+figure{margin:18px 0;}
+figure img{
+  width:100%;
+  display:block;
+  border-radius:10px;
+  border:1px solid var(--line);
+  background:#fff;
+}
+figcaption{
+  margin-top:8px;
+  font-size:0.85rem;
+  color:var(--ink-soft);
+  text-align:center;
+}
+pre{
+  background:var(--code-bg);
+  border:1px solid var(--line);
+  border-radius:10px;
+  padding:16px 18px;
+  overflow-x:auto;
+  font-family:"Consolas","Courier New",monospace;
+  font-size:0.84rem;
+  line-height:1.55;
+  margin:0 0 10px;
+}
+code{font-family:"Consolas","Courier New",monospace;}
+.note{color:var(--ink-soft);font-size:0.85rem;font-style:italic;margin:0 0 14px;}
+.cell{margin-bottom:22px;}
+.cell-label{
+  font-size:0.72rem;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  color:var(--ink-soft);
+  margin-bottom:6px;
+}
+table{width:100%;border-collapse:collapse;margin:10px 0 16px;font-size:0.88rem;}
+th,td{padding:7px 10px;border-bottom:1px solid var(--line);text-align:left;}
+th{color:var(--ink-soft);font-weight:700;font-size:0.78rem;text-transform:uppercase;letter-spacing:0.04em;}
+.ok{color:var(--ok);font-weight:600;}
+.bad{color:var(--bad);font-weight:600;}
+.stat-row{display:flex;gap:14px;flex-wrap:wrap;margin:12px 0 18px;}
+.stat{
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:10px;
+  padding:14px 20px;
+  min-width:140px;
+}
+.stat .label{color:var(--ink-soft);font-size:0.78rem;text-transform:uppercase;letter-spacing:0.05em;}
+.stat .value{font-size:1.5rem;font-weight:700;color:var(--accent);margin-top:2px;}
+.file-list{list-style:none;padding:0;margin:0;}
+.file-list li{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:10px 0;
+  border-bottom:1px solid var(--line);
+  font-size:0.92rem;
+}
+.file-list li:last-child{border-bottom:none;}
+.file-list .ext{
+  font-size:0.68rem;
+  font-weight:700;
+  background:var(--accent-soft);
+  color:var(--accent);
+  padding:2px 7px;
+  border-radius:4px;
+}
+.file-list a{color:var(--ink);text-decoration:none;}
+.file-list a:hover{color:var(--accent);}
+footer{margin-top:40px;padding-top:20px;border-top:1px solid var(--line);color:var(--ink-soft);font-size:0.82rem;text-align:center;}
+@media(max-width:600px){.wrap{padding:28px 16px 60px;} h1{font-size:1.6rem;}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <span class="badge">Offline copy &middot; saved from Notion</span>
+  <h1>Deep Learning — Review Quiz</h1>
+  <p class="subtitle">Vegetables Classification using a Deep Convolutional Neural Network (DCNN) &middot; 3rd Session (Processing Images)</p>
+
+  <h2>The case</h2>
+  <div class="card">
+    <p><strong>VeggieLKa</strong> is set to make a significant impact in the agri-tech sector by promoting sustainable agriculture and healthy eating. Their goal is to introduce an innovative system that enhances the classification and sorting of vegetables on a granular level, ultimately improving the efficiency and precision of global vegetable supply chains.</p>
+    <p>As the latest recruit, you are tasked with spearheading this groundbreaking project. Your mission is to develop a Python-based program utilizing the TensorFlow library to craft a Deep Convolutional Neural Network (DCNN) model. This advanced model will specialize in accurately distinguishing between four primary vegetable classes: <strong>Broccoli, Carrot, Cucumber, and Tomato</strong>.</p>
+  </div>
+
+  <h3>Requirements</h3>
+  <ol class="steps">
+    <li><b>Load and split dataset</b><span>Assign the dataset path, populate CLASS_NAMES, load each image as grayscale into an array, shuffle, then split into training / validation / testing (80 / 10 / 10).</span></li>
+    <li><b>Data preprocessing</b><span>Convert each set to float32, normalize pixel values by dividing by 255, and optionally one-hot encode the target labels.</span></li>
+    <li><b>DCNN architecture — input layer</b><span>Define the image dimensions and channel count for the input layer.</span></li>
+    <li><b>DCNN architecture — hidden layers</b><span>Stack convolutional layers, max pooling layers, and a flatten layer to extract and reduce feature map dimensions.</span></li>
+    <li><b>DCNN architecture — output layer</b><span>Two dense layers: one ReLU-activated, and a final Softmax layer to classify into one of the four vegetable classes.</span></li>
+    <li><b>Model training</b><span>Use the Adam optimizer, an appropriate loss function, accuracy as the metric, and train for at least 10 epochs.</span></li>
+    <li><b>Prediction &amp; evaluation</b><span>Predict on the testing set and print both loss and accuracy; evaluate the testing set the same way.</span></li>
+    <li><b>Plot of evaluation metrics</b><span>Plot training vs. validation loss, and training vs. validation accuracy.</span></li>
+  </ol>
+
+  <h2>Reference figures (from the brief)</h2>
+  <figure>
+    <img src="assets/fig1-model-visualization.png" alt="Model visualization">
+    <figcaption>Figure 1. Model Visualization</figcaption>
+  </figure>
+  <figure>
+    <img src="assets/fig2-model-training.png" alt="Model training">
+    <figcaption>Figure 2. Model Training</figcaption>
+  </figure>
+  <figure>
+    <img src="assets/fig3-model-prediction.png" alt="Model prediction">
+    <figcaption>Figure 3. Model Prediction</figcaption>
+  </figure>
+  <figure>
+    <img src="assets/fig4-model-evaluation.png" alt="Model evaluation">
+    <figcaption>Figure 4. Model Evaluation</figcaption>
+  </figure>
+
+  <h2>Worked answer notebook</h2>
+  <p class="note">Full walkthrough extracted from Review_Quiz_DL.ipynb, with its own saved run output. The original .ipynb is also included in this folder if you want to open and re-run it yourself.</p>
+
+  <div class="cell">
+    <div class="cell-label">Imports</div>
+    <pre><code>import os
+import numpy as np
+import matplotlib.pyplot as plt
+import tensorflow as tf
+from sklearn.model_selection import train_test_split
+from tensorflow.keras.utils import load_img, img_to_array, to_categorical</code></pre>
+  </div>
+
+  <div class="cell">
+    <div class="cell-label">Load data</div>
+    <pre><code>DATA_PATH = "Dataset"
+CLASS_LIST = ["Broccoli", "Carrot", "Cucumber", "Tomato"]
+EPOCHS = 10
+BATCH_SIZE = 32
+images = []
+labels = []</code></pre>
+  </div>
+
+  <div class="cell">
+    <div class="cell-label">Load &amp; preprocess</div>
+    <pre><code>for i, class_name in enumerate(CLASS_LIST):
+  # 0 Broccoli, 1 Carrot, 2 Cucumber, 3 Tomato
+  folder_path = os.path.join(DATA_PATH, class_name)
+
+  # NOTE: don't forget os.listdir (common mistake, causes an error if skipped)
+  for j, image_name in enumerate(os.listdir(folder_path)):
+    image_path = os.path.join(folder_path, image_name)
+
+    # param1 = image path, param2 = target size, param3 = color mode
+    image = load_img(image_path, target_size=(64, 64), color_mode="grayscale")
+    image = img_to_array(image)
+    image = image / 255.0  # normalize [0,255] -> [0,1]
+
+    images.append(image)
+    labels.append(i)
+
+    # only take 100 images per class, in case the device can't handle more
+    if j > 98:
+      break</code></pre>
+  </div>
+
+  <div class="cell">
+    <div class="cell-label">Train / validation / test split</div>
+    <pre><code>x = np.array(images, dtype=np.float32)
+y = to_categorical(labels, num_classes=len(CLASS_LIST))
+
+# the brief says 80 | 10 | 10 — since train_test_split only splits in two,
+# do it twice: first 80/20, then split that 20 in half again for 10/10
+x_train, x_temp, y_train, y_temp = train_test_split(x, y, random_state=9, test_size=0.2)
+x_test, x_val, y_test, y_val = train_test_split(x_temp, y_temp, random_state=10, train_size=0.5)</code></pre>
+  </div>
+
+  <div class="cell">
+    <div class="cell-label">Model build</div>
+    <pre><code>model = tf.keras.Sequential([
+    # Conv2D params: filters, kernel size, stride, padding, input shape, activation
+    tf.keras.layers.Conv2D(16, kernel_size=(3,3), strides=(1,1), padding="same",
+                            input_shape=(64, 64, 1), activation="relu"),
+    tf.keras.layers.MaxPooling2D((2,2)),
+
+    tf.keras.layers.Conv2D(32, kernel_size=(3,3), strides=(1,1), padding="same"),
+    tf.keras.layers.Conv2D(32, kernel_size=(3,3), strides=(1,1), padding="same"),
+    tf.keras.layers.MaxPooling2D((2,2)),
+
+    tf.keras.layers.Flatten(),
+    tf.keras.layers.Dense(32, activation="relu"),
+    tf.keras.layers.Dense(len(CLASS_LIST), activation="softmax")
+])
+
+model.compile(
+    optimizer="adam",
+    loss="categorical_crossentropy",  # multi-class, so categorical_crossentropy
+    metrics=["accuracy"]
+)</code></pre>
+  </div>
+
+  <div class="cell">
+    <div class="cell-label">Training run (actual output)</div>
+    <pre><code>history = model.fit(
+    x_train, y_train,
+    validation_data=(x_val, y_val),
+    epochs=EPOCHS,
+    batch_size=BATCH_SIZE
+)
+
+Epoch  1/10  — accuracy: 0.2656 — loss: 1.4107 — val_accuracy: 0.2250 — val_loss: 1.5491
+Epoch  2/10  — accuracy: 0.3875 — loss: 1.3379 — val_accuracy: 0.6250 — val_loss: 1.2104
+Epoch  3/10  — accuracy: 0.5844 — loss: 1.1494 — val_accuracy: 0.8000 — val_loss: 0.9145
+Epoch  4/10  — accuracy: 0.6938 — loss: 0.9018 — val_accuracy: 0.7250 — val_loss: 0.7772
+Epoch  5/10  — accuracy: 0.7312 — loss: 0.7116 — val_accuracy: 0.7250 — val_loss: 0.7780
+Epoch  6/10  — accuracy: 0.7500 — loss: 0.6110 — val_accuracy: 0.7000 — val_loss: 0.6550
+Epoch  7/10  — accuracy: 0.8406 — loss: 0.4224 — val_accuracy: 0.7250 — val_loss: 0.5456
+Epoch  8/10  — accuracy: 0.8906 — loss: 0.3420 — val_accuracy: 0.7750 — val_loss: 0.6956
+Epoch  9/10  — accuracy: 0.9094 — loss: 0.2749 — val_accuracy: 0.8000 — val_loss: 0.5970
+Epoch 10/10  — accuracy: 0.9312 — loss: 0.2209 — val_accuracy: 0.7250 — val_loss: 0.5473</code></pre>
+  </div>
+
+  <div class="cell">
+    <div class="cell-label">Evaluation on the test set</div>
+    <pre><code>model.evaluate(x_test, y_test)
+# -> loss: 0.6861, accuracy: 0.7250</code></pre>
+    <div class="stat-row">
+      <div class="stat"><div class="label">Test accuracy</div><div class="value">72.5%</div></div>
+      <div class="stat"><div class="label">Test loss</div><div class="value">0.686</div></div>
+      <div class="stat"><div class="label">Final train accuracy</div><div class="value">93.1%</div></div>
+    </div>
+  </div>
+
+  <div class="cell">
+    <div class="cell-label">Prediction vs. actual (test set)</div>
+    <pre><code>prediction_result = model.predict(x_test)
+for i, prediction in enumerate(prediction_result):
+  print(f"Actual : {CLASS_LIST[np.argmax(y_test[i])]} | Prediction : {CLASS_LIST[np.argmax(prediction)]}")</code></pre>
+    <table>
+      <thead><tr><th>#</th><th>Actual</th><th>Prediction</th><th>Match</th></tr></thead>
+      <tbody id="predTable"></tbody>
+    </table>
+  </div>
+
+  <div class="cell">
+    <div class="cell-label">Showing sample predictions as images</div>
+    <pre><code># what the quiz actually asks you to show
+plt.figure(figsize=(20, 4))
+for i in range(10):
+  plt.subplot(1, 10, i+1)
+  plt.imshow(x_test[i], cmap="gray")
+  plt.text(-1, -1, f"Actual : {CLASS_LIST[np.argmax(y_test[i])]} | Prediction : {CLASS_LIST[np.argmax(prediction_result[i])]}")
+  plt.axis(False)
+plt.show()
+
+# alternate 2-row layout used for the TM1 quiz
+plt.figure(figsize=(20, 8))
+for i in range(5):
+  plt.subplot(2, 5, i+1)
+  plt.imshow(x_test[i], cmap="gray")
+  plt.text(-1, -1, f"Actual : {CLASS_LIST[np.argmax(y_test[i])]} | Prediction : {CLASS_LIST[np.argmax(prediction_result[i])]}")
+  plt.axis(False)
+
+  plt.subplot(2, 5, i+6)
+  plt.imshow(x_test[i+5], cmap="gray")
+  plt.text(-1, -1, f"Actual : {CLASS_LIST[np.argmax(y_test[i+5])]} | Prediction : {CLASS_LIST[np.argmax(prediction_result[i+5])]}")
+  plt.axis(False)
+plt.show()</code></pre>
+    <p class="note">The rendered plot images weren't saved in the exported notebook, so they aren't reproduced here — the code above is exactly what generates them if you re-run the notebook.</p>
+  </div>
+
+  <div class="cell">
+    <div class="cell-label">Plot of evaluation metrics</div>
+    <pre><code>plt.figure(figsize=(20,4))
+
+plt.subplot(1, 2, 1)
+plt.plot(history.history["accuracy"], label="Training Accuracy")
+plt.plot(history.history["val_accuracy"], label="Validation Accuracy")
+plt.legend(); plt.xlabel("Number of Epoch"); plt.ylabel("Accuracy")
+
+plt.subplot(1, 2, 2)
+plt.plot(history.history["loss"], label="Training Loss")
+plt.plot(history.history["val_loss"], label="Validation Loss")
+plt.legend(); plt.xlabel("Number of Epoch"); plt.ylabel("Loss")
+
+plt.show()</code></pre>
+  </div>
+
+  <h2>Files in this folder</h2>
+  <ul class="file-list">
+    <li><span class="ext">ZIP</span><a href="Dataset.zip">Dataset.zip</a> — the raw vegetable image dataset (49 MB)</li>
+    <li><span class="ext">DOCX</span><a href="Latihan%20Soal%20Quiz%20DL%201.docx">Latihan Soal Quiz DL 1.docx</a> — original quiz brief</li>
+    <li><span class="ext">IPYNB</span><a href="Review_Quiz_DL.ipynb">Review_Quiz_DL.ipynb</a> — original answer notebook, open in Jupyter to re-run</li>
+  </ul>
+
+  <footer>Saved offline from jeanette-ellyka.notion.site &middot; visit once online, then this page keeps working with no internet connection on that device</footer>
+
+</div>
+
+<script>
+var classes = ["Broccoli","Carrot","Cucumber","Tomato"];
+var actual = ["Broccoli","Tomato","Cucumber","Carrot","Tomato","Carrot","Cucumber","Broccoli","Cucumber","Broccoli","Carrot","Broccoli","Carrot","Cucumber","Tomato","Tomato","Broccoli","Tomato","Broccoli","Broccoli","Broccoli","Cucumber","Broccoli","Carrot","Tomato","Broccoli","Carrot","Tomato","Broccoli","Carrot","Cucumber","Tomato","Broccoli","Cucumber","Cucumber","Broccoli","Cucumber","Broccoli","Tomato","Tomato"];
+var predicted = ["Broccoli","Tomato","Cucumber","Carrot","Broccoli","Tomato","Cucumber","Broccoli","Tomato","Tomato","Carrot","Tomato","Carrot","Cucumber","Tomato","Tomato","Broccoli","Carrot","Broccoli","Broccoli","Tomato","Tomato","Broccoli","Carrot","Tomato","Broccoli","Carrot","Tomato","Tomato","Carrot","Cucumber","Tomato","Broccoli","Broccoli","Cucumber","Broccoli","Tomato","Broccoli","Tomato","Tomato"];
+var rows = "";
+for (var i = 0; i < actual.length; i++) {
+  var match = actual[i] === predicted[i];
+  rows += "<tr><td>" + (i+1) + "</td><td>" + actual[i] + "</td><td>" + predicted[i] + "</td><td class=\"" + (match ? "ok" : "bad") + "\">" + (match ? "Correct" : "Wrong") + "</td></tr>";
+}
+document.getElementById("predTable").innerHTML = rows;
+
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", function () {
+    navigator.serviceWorker.register("sw.js").catch(function () {});
+  });
+}
+</script>
+</body>
+</html>

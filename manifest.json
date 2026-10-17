@@ -1,0 +1,18 @@
+{
+  "name": "Deep Learning — Review Quiz",
+  "short_name": "DL Review Quiz",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#0f1115",
+  "theme_color": "#5b9dff",
+  "description": "Deep Learning review quiz brief, reference figures, and worked answer notebook for the DCNN vegetable classification case.",
+  "icons": [
+    {
+      "src": "assets/fig1-model-visualization.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
