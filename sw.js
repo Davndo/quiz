@@ -3,10 +3,10 @@ const CORE_ASSETS = [
   "./",
   "./index.html",
   "./manifest.json",
-  "./assets/fig1-model-visualization.png",
-  "./assets/fig2-model-training.png",
-  "./assets/fig3-model-prediction.png",
-  "./assets/fig4-model-evaluation.png"
+  "./fig1-model-visualization.png",
+  "./fig2-model-training.png",
+  "./fig3-model-prediction.png",
+  "./fig4-model-evaluation.png"
 ];
 
 self.addEventListener("install", function (event) {

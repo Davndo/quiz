@@ -9,7 +9,7 @@
   "description": "Deep Learning review quiz brief, reference figures, and worked answer notebook for the DCNN vegetable classification case.",
   "icons": [
     {
-      "src": "assets/fig1-model-visualization.png",
+      "src": "fig1-model-visualization.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any"
