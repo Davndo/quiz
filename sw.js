@@ -1,12 +1,12 @@
-const CACHE_NAME = "dl-review-quiz-v3";
+const CACHE_NAME = "dl-review-quiz-v4";
 const CORE_ASSETS = [
   "./",
   "./index.html",
   "./manifest.json",
-  "./fig1-model-visualization.png",
-  "./fig2-model-training.png",
-  "./fig3-model-prediction.png",
-  "./fig4-model-evaluation.png",
+  "./soal-halaman-1.png",
+  "./soal-halaman-2.png",
+  "./soal-halaman-3.png",
+  "./soal-halaman-4.png",
   "./Latihan%20Soal%20Quiz%20DL%201.docx",
   "./Review_Quiz_DL.ipynb"
 ];
