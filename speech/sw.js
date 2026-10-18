@@ -1,4 +1,4 @@
-const CACHE_NAME = "speech-review-quiz-v2";
+const CACHE_NAME = "speech-review-quiz-v3";
 const CORE_ASSETS = [
   "./",
   "./index.html",
@@ -14,7 +14,15 @@ const CORE_ASSETS = [
 self.addEventListener("install", function (event) {
   event.waitUntil(
     caches.open(CACHE_NAME).then(function (cache) {
-      return cache.addAll(CORE_ASSETS);
+      return Promise.all(
+        CORE_ASSETS.map(function (url) {
+          return fetch(url, { cache: "reload" }).then(function (response) {
+            if (response && response.status === 200) {
+              return cache.put(url, response);
+            }
+          });
+        })
+      );
     }).then(function () {
       return self.skipWaiting();
     })
