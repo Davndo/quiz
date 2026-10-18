@@ -187,7 +187,7 @@ code{font-family:"Consolas","Courier New",monospace;}
         <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12"/><path d="m8 11 4 4 4-4"/><path d="M4 21h16"/></svg></span>
         <span>
           <span class="label">Lihat Notebook Jawaban</span>
-          <span class="sub">2 file — scroll ke bawah</span>
+          <span class="sub">3 file — scroll ke bawah</span>
         </span>
       </a>
       <a class="dl-btn-icon" href="latihan_quiz.ipynb" download title="Download latihan_quiz.ipynb">
@@ -496,6 +496,190 @@ def add_white_noise():
     </div>
   </div>
 
+  <h3>Exercise-1.ipynb <span class="badge">latihan praktik</span></h3>
+  <p class="note">Berbeda dari latihan_quiz.ipynb: menu augmentasinya pakai volume &amp; fade out (tidak ada di latihan_quiz.ipynb), sementara white noise &amp; repeat clip dari latihan_quiz.ipynb tidak ada di sini. Pitch shift dan fade in sama-sama ada di keduanya.</p>
+
+  <div class="cell">
+    <div class="cell-label">Imports</div>
+    <div class="code-wrap">
+      <button class="copy-btn" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>Copy</button>
+      <pre><code>import torch
+import torchaudio
+import librosa
+import soundfile as sf
+from pydub import AudioSegment
+import random</code></pre>
+    </div>
+  </div>
+
+  <div class="cell">
+    <div class="cell-label">Settings: model and audio file</div>
+    <div class="code-wrap">
+      <button class="copy-btn" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>Copy</button>
+      <pre><code>bundle = torchaudio.pipelines.WAV2VEC2_ASR_BASE_960H
+model = bundle.get_model()
+
+AUDIO_FILE = "./speech.wav"</code></pre>
+    </div>
+  </div>
+
+  <div class="cell">
+    <div class="cell-label">Predict function</div>
+    <div class="code-wrap">
+      <button class="copy-btn" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>Copy</button>
+      <pre><code>def predict_text(audio_path):
+
+    # Load
+    waveform, sample_rate = torchaudio.load(audio_path)
+
+    if sample_rate != bundle.sample_rate:
+        waveform = torchaudio.functional.resample(waveform, sample_rate, bundle.sample_rate)
+
+    with torch.inference_mode():
+        emission, _ = model(waveform)
+
+    class GreedyCTCDecoder(torch.nn.Module):
+        def __init__(self, labels):
+            super().__init__()
+            self.labels = labels
+            self.blank = 0
+
+        def forward(self, emission: torch.Tensor) -&gt; str:
+            indices = torch.argmax(emission, dim=-1)
+            indices = torch.unique_consecutive(indices, dim=-1)
+            indices = [i for i in indices if i != self.blank]
+            return ''.join([self.labels[i] for i in indices])
+
+    decoder = GreedyCTCDecoder(bundle.get_labels())
+    transcript = decoder(emission[0])
+    transcript = transcript.replace("|", " ")
+    return transcript</code></pre>
+    </div>
+  </div>
+
+  <div class="cell">
+    <div class="cell-label">Sub menu 1 functions</div>
+    <div class="code-wrap">
+      <button class="copy-btn" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>Copy</button>
+      <pre><code>def validate_filename(filename):
+    if filename.endswith(".wav"):
+        return True
+    else:
+        print ("File name must end with .wav")
+        return False
+
+def adjust_volume(audio, db):
+    return audio + db
+
+def adjust_pitch(audio_path, pitch_rate):
+    data, sample_rate = librosa.load(audio_path, sr=None)
+    shifted_audio = librosa.effects.pitch_shift(data, sr=sample_rate, n_steps=pitch_rate)
+
+    temp_file = "shifted.wav"
+    sf.write(temp_file, shifted_audio, sample_rate)
+
+    new_audio = AudioSegment.from_wav(temp_file)
+    return new_audio
+
+def apply_fade_in(audio, duration):
+    return audio.fade_in(duration)
+
+def apply_fade_out(audio, duration):
+    return audio.fade_out(duration)
+
+def export_file(audio, filename):
+    audio.export(filename, format="wav")
+    print(f"Audio successfully exported as {filename}")
+
+def export_function(audio):
+    while True:
+        filename = input('file name: ')
+        if filename.endswith('.wav'):
+            break
+        else:
+            print('filename must end with .wav')
+    export_file(audio, filename)</code></pre>
+    </div>
+  </div>
+
+  <div class="cell">
+    <div class="cell-label">Menu 1: audio augmentation</div>
+    <div class="code-wrap">
+      <button class="copy-btn" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>Copy</button>
+      <pre><code>def menu1():
+    audio = AudioSegment.from_wav(AUDIO_FILE)
+    while True:
+        print('1. increase or decrease volume')
+        print('2. increase or decrease pitch')
+        print('3. insert fade in effect')
+        print('4. insert fade out effect')
+        print('5. back to main menu')
+
+        choice = int(input('&gt;&gt; '))
+
+        if choice == 1:
+            while True:
+                db_input = int(input('input db: '))
+                if db_input &gt; -10000 and db_input &lt; 100:
+                    break
+                else:
+                    print('must be between -10000 and 100')
+            audio = adjust_volume(audio, db_input)
+            export_function(audio)
+        elif choice == 2:
+            while True:
+                pitch = int(input('input pitch: '))
+                if pitch &gt; -10 and pitch &lt; 10:
+                    break
+                else:
+                    print('must be between -10 and 10')
+            audio = adjust_pitch(AUDIO_FILE, pitch)
+            export_function(audio)
+        elif choice == 3:
+            duration = random.randint(1, 5)*1000
+            audio = apply_fade_in(audio, duration)
+            export_function(audio)
+        elif choice == 4:
+            duration = random.randint(1, 5)*1000
+            audio = apply_fade_out(audio, duration)
+            export_function(audio)
+        elif choice == 5:
+            break
+        else:
+            print('must be 1-5')</code></pre>
+    </div>
+  </div>
+
+  <div class="cell">
+    <div class="cell-label">Main menu</div>
+    <div class="code-wrap">
+      <button class="copy-btn" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>Copy</button>
+      <pre><code>def main_menu():
+    while True:
+        print('1. audio augmentation')
+        print('2. predict text')
+        print('3. exit')
+
+        choice = int(input('&gt;&gt; '))
+        if choice == 1:
+            menu1()
+        elif choice == 2:
+            transcript = predict_text(AUDIO_FILE)
+            print(transcript)
+        elif choice == 3:
+            break
+    print('thank you for using the program')</code></pre>
+    </div>
+  </div>
+
+  <div class="cell">
+    <div class="cell-label">Run</div>
+    <div class="code-wrap">
+      <button class="copy-btn" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>Copy</button>
+      <pre><code>main_menu()</code></pre>
+    </div>
+  </div>
+
   <div class="dl-menu" style="margin-top:28px;">
     <a class="dl-btn" href="augmentation.ipynb" download>
       <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></span>
@@ -509,6 +693,13 @@ def add_white_noise():
       <span>
         <span class="label">Download latihan_quiz.ipynb</span>
         <span class="sub">latihan_quiz.ipynb</span>
+      </span>
+    </a>
+    <a class="dl-btn" href="Exercise-1.ipynb" download>
+      <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></span>
+      <span>
+        <span class="label">Download Exercise-1.ipynb</span>
+        <span class="sub">Exercise-1.ipynb</span>
       </span>
     </a>
   </div>
